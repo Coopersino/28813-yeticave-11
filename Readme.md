@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Виталий Шешин](https://up.htmlacademy.ru/php/11/user/28813).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Рожков](https://htmlacademy.ru/profile/id1069033).
 
 ---
 
