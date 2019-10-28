@@ -42,17 +42,7 @@
     ];
 
     function getFinancialFormat($cost){
-      if (! is_numeric($cost)) {
-          return false;
-      }
-
-      if (ceil($cost) < 1000) {
-          $finFormatedCost = $cost;
-      }
-      else {
-          $finFormatedCost = number_format($cost, 0 , "." , " "  );
-      }
-      return $finFormatedCost. ' ₽';
+      return number_format(ceil($cost), 0 , "." , " "  ). ' ₽';
     }
 ?>
 <!DOCTYPE html>
