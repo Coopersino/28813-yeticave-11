@@ -30,8 +30,9 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost"><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
                         </div>
-                        <div class="lot__timer timer">
-                            12:23
+                        <div class="lot__timer timer <?php $exp_time = getDateRange($advertisement['expiration_date']);
+                          if ($exp_time['use_timer_finishing'] === true) echo 'timer--finishing' ?>">
+                            <?= getDateRange($advertisement['expiration_date'])['time'] ?>
                         </div>
                     </div>
                 </div>
