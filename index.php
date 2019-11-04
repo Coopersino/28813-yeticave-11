@@ -47,8 +47,9 @@
         ]
     ];
 
-    function getFinancialFormat($cost){
-        return number_format(ceil($cost), 0 , "." , " "  ). ' ₽';
+    function getFinancialFormat($cost)
+    {
+        return number_format(ceil($cost), 0, ".", " ") . ' ₽';
     }
 
     function getDateRange($expDate)
@@ -66,17 +67,12 @@
             $minutes = 0;
         }
 
-        return (
-        $exp_time = [
-            'hours' => $hours,
-            'minutes' => $minutes
-        ]
-        );
+        return (['hours' => $hours, 'minutes' => $minutes]);
     }
 
     require_once('helpers.php');
 
     $main_content = include_template('main.php', ['categories' => $categories, 'advertisements' => $advertisements]);
-    $layout_content = include_template('layout.php',['categories' => $categories, 'main_content' => $main_content, 'page_title' => 'Главная']);
+    $layout_content = include_template('layout.php', ['categories' => $categories, 'main_content' => $main_content, 'page_title' => 'Главная']);
     print($layout_content);
 ?>
