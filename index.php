@@ -22,7 +22,7 @@
             'category' => 'Крепления',
             'cost' => 8000,
             'img_url' => 'img/lot-3.jpg',
-            'expiration_date' => '2019-11-04'
+            'expiration_date' => '2019-11-06'
         ],
         [
             'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
@@ -51,35 +51,27 @@
         return number_format(ceil($cost), 0 , "." , " "  ). ' ₽';
     }
 
-    function getDateRange($exp_date) {
-        date_default_timezone_set('Europe/Moscow');
-        $lot_time = strtotime($exp_date);
-        $cur_date = time();
-        $diff = ($lot_time - $cur_date);
+    function getDateRange($expDate)
+    {
+        $lotTime = strtotime($expDate);
+        $curDate = time();
+        $diff = ($lotTime - $curDate);
 
         if ($diff > 0) {
             $hours = floor($diff / 3600);
             $minutes = (floor($diff / 60)) - ($hours * 60);
 
-            if ($hours == 0) {
-                $exp_time = [
-                    'time' => '00'.':'.$minutes,
-                    'use_timer_finishing' => true
-                ];
-            }
-            else {
-                $exp_time = [
-                    'time' => $hours.':'.$minutes,
-                    'use_timer_finishing' => false
-                ];
-            }
         } else {
-            $exp_time = [
-                'time' => '00'.':'.'00',
-                'use_timer_finishing' => true
-            ];
+            $hours = 0;
+            $minutes = 0;
         }
-        return($exp_time);
+
+        return (
+        $exp_time = [
+            'hours' => $hours,
+            'minutes' => $minutes
+        ]
+        );
     }
 
     require_once('helpers.php');
