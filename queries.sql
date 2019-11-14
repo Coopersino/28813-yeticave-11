@@ -1,5 +1,5 @@
 INSERT INTO categories (categor_name, categor_code)
-VALUES ('Доски и лыжи', 'boards_&_skis'),
+VALUES ('Доски и лыжи', 'boards'),
        ('Крепления', 'attachment'),
        ('Ботинки', 'boots'),
        ('Одежда', 'clothing'),
