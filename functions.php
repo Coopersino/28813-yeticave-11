@@ -21,5 +21,4 @@
 
         return (['hours' => $hours, 'minutes' => $minutes]);
     }
-
 ?>

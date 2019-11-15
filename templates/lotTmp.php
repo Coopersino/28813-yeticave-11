@@ -29,10 +29,10 @@
         <div class="lot-item__cost-state">
           <div class="lot-item__rate">
             <span class="lot-item__amount">Текущая цена</span>
-            <span class="lot-item__cost"><?= htmlspecialchars($advertisement['cost']) ?></span>
+            <span class="lot-item__cost"><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
           </div>
           <div class="lot-item__min-cost">
-            Мин. ставка <span><?= htmlspecialchars($advertisement['cost']) ?></span>
+            Мин. ставка <span><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
           </div>
         </div>
       </div>
