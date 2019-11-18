@@ -30,9 +30,11 @@
             print($layoutContent);
         } else {
             http_response_code(404);
+            print('Объявление не найдено');
         }
 
     } else {
         http_response_code(404);
+        print('Неверный параметр в запросе');
     }
 ?>
