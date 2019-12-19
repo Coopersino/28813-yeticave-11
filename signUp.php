@@ -4,6 +4,11 @@
     require_once('functions.php');
     require_once('dataBaseQueries.php');
 
+    if (isset($_SESSION['user'])) {
+        http_response_code(403);
+        exit();
+    }
+
     $errors = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -59,7 +64,7 @@
     }
     $addContent = include_template('signUpUser.php', ['errors' => $errors, 'categories' => $categories]);
 
-    $layout_content = include_template('layout.php', [
+    $layoutContent = include_template('layout.php', [
         'main_content' => $addContent,
         'page_title' => 'Регистрация',
         'categories' => $categories,
@@ -67,5 +72,5 @@
         'user_name' => $user_name
     ]);
 
-    print ($layout_content);
+    print ($layoutContent);
 ?>
