@@ -25,9 +25,20 @@
         }
 
         if ($advertisement) {
-            $mainContent = include_template('lotTmp.php', ['advertisement' => $advertisement, 'categories' => $categories]);
-            $layoutContent = include_template('layout.php', ['categories' => $categories, 'main_content' => $mainContent, 'page_title' => 'Главная']);
+            $mainContent = include_template('lotTmp.php', [
+                'advertisement' => $advertisement,
+                'categories' => $categories
+            ]);
+
+            $layoutContent = include_template('layout.php', [
+                'categories' => $categories,
+                'main_content' => $mainContent,
+                'page_title' => 'Главная',
+                'user_name' => $user_name
+            ]);
+
             print($layoutContent);
+
         } else {
             http_response_code(404);
             print('Объявление не найдено');

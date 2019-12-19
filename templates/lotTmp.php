@@ -21,21 +21,23 @@
       <p class="lot-item__description"><?= htmlspecialchars($advertisement['description']) ?></p>
     </div>
     <div class="lot-item__right">
-      <div class="lot-item__state">
-          <?php $expTime = getDateRange($advertisement['expiration_date']) ?>
-        <div class="lot__timer timer <?= ($expTime['hours'] == 0) ? 'timer--finishing' : '' ?>">
-            <?= $expTime['hours'] . ':' . $expTime['minutes'] ?>
-        </div>
-        <div class="lot-item__cost-state">
-          <div class="lot-item__rate">
-            <span class="lot-item__amount">Текущая цена</span>
-            <span class="lot-item__cost"><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
-          </div>
-          <div class="lot-item__min-cost">
-            Мин. ставка <span><?= htmlspecialchars(getFinancialFormat($advertisement['rate_step'])) ?></span>
-          </div>
-        </div>
-      </div>
+        <?php if (isset($_SESSION['user'])): ?>
+            <div class="lot-item__state">
+                <?php $expTime = getDateRange($advertisement['expiration_date']) ?>
+                <div class="lot__timer timer <?= ($expTime['hours'] == 0) ? 'timer--finishing' : '' ?>">
+                    <?= $expTime['hours'] . ':' . $expTime['minutes'] ?>
+                </div>
+                <div class="lot-item__cost-state">
+                    <div class="lot-item__rate">
+                        <span class="lot-item__amount">Текущая цена</span>
+                        <span class="lot-item__cost"><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
+                    </div>
+                    <div class="lot-item__min-cost">
+                        Мин. ставка <span><?= htmlspecialchars(getFinancialFormat($advertisement['rate_step'])) ?></span>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
   </div>
 </section>

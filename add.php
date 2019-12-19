@@ -4,6 +4,11 @@
     require_once('functions.php');
     require_once('dataBaseQueries.php');
 
+    if (!isset($_SESSION['user'])) {
+        http_response_code(403);
+        exit();
+    }
+
     $errors = [];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -83,7 +88,10 @@
         }
     }
 
-    $addContent = include_template('addLot.php', ['errors' => $errors, 'categories' => $categories]);
+    $addContent = include_template('addLot.php', [
+        'errors' => $errors,
+        'categories' => $categories
+    ]);
 
     $layoutContent = include_template('layout.php', [
         'main_content' => $addContent,
