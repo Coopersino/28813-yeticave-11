@@ -46,4 +46,8 @@
     function categoryIsValid($id, $allowedList) {
         return !in_array($id, $allowedList) ? 'Неверная категория' : null;
     }
+
+    function emailIsValid($value) {
+        return !filter_var($value, FILTER_VALIDATE_EMAIL) ? 'Введите корректный email' : null;
+    }
 ?>
