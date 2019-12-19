@@ -13,7 +13,7 @@
   <div class="lot-item__content">
     <div class="lot-item__left">
       <div class="lot-item__image">
-        <img src="<?= htmlspecialchars($advertisement['img_url']); ?>" width="730" height="548"
+        <img src="img/<?= htmlspecialchars($advertisement['img_url']); ?>" width="730" height="548"
              alt="<?= htmlspecialchars($advertisement['categor_name']) ?>">
       </div>
       <p class="lot-item__category">Категория: <span><?= htmlspecialchars($advertisement['categor_name']) ?></span>
@@ -32,7 +32,7 @@
             <span class="lot-item__cost"><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
           </div>
           <div class="lot-item__min-cost">
-            Мин. ставка <span><?= htmlspecialchars(getFinancialFormat($advertisement['cost'])) ?></span>
+            Мин. ставка <span><?= htmlspecialchars(getFinancialFormat($advertisement['rate_step'])) ?></span>
           </div>
         </div>
       </div>

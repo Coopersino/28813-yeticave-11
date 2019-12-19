@@ -7,7 +7,7 @@
         require_once('functions.php');
         require_once('dataBaseQueries.php');
 
-        $advertQueryById = "SELECT advs.adv_name, advs.cost, advs.img_url, advs.description, advs.expiration_date, cat.categor_name
+        $advertQueryById = "SELECT advs.adv_name, advs.cost, advs.rate_step, advs.img_url, advs.description, advs.expiration_date, cat.categor_name
                         FROM advertisements advs
                         INNER JOIN categories cat
                         ON advs.category_id = cat.id
