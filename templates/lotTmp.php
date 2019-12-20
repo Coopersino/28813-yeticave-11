@@ -13,7 +13,7 @@
   <div class="lot-item__content">
     <div class="lot-item__left">
       <div class="lot-item__image">
-        <img src="img/<?= htmlspecialchars($advertisement['img_url']); ?>" width="730" height="548"
+        <img src="<?= htmlspecialchars($advertisement['img_url']); ?>" width="730" height="548"
              alt="<?= htmlspecialchars($advertisement['categor_name']) ?>">
       </div>
       <p class="lot-item__category">Категория: <span><?= htmlspecialchars($advertisement['categor_name']) ?></span>
