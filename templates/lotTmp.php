@@ -36,8 +36,29 @@
                         Мин. ставка <span><?= htmlspecialchars(getFinancialFormat($advertisement['rate_step'])) ?></span>
                     </div>
                 </div>
+                <form class="lot-item__form" action="" method="post" autocomplete="off">
+                    <p class="lot-item__form-item form__item <?= isset($errors['cost']) ? "form__item--invalid" : ""; ?>">
+                        <label for="cost">Ваша ставка</label>
+                        <input id="cost" type="text" name="cost" placeholder="<?= $min_rate; ?>"
+                               value="<?= isset($errors['cost']) ? $_POST['cost'] : $min_rate; ?>">
+                        <span class="form__error"><?= $errors['cost']; ?></span>
+                    </p>
+                    <button type="submit" class="button">Сделать ставку</button>
+                </form>
             </div>
         <?php endif; ?>
+        <div class="history">
+            <h3>История ставок (<span><?= $count_rates; ?></span>)</h3>
+            <table class="history__list">
+                <?php foreach ($rate_data as $item): ?>
+                <tr class="history__item">
+                    <td class="history__name"><?= htmlspecialchars($item['user_name']); ?></td>
+                    <td class="history__price"><?= htmlspecialchars($item['rate_value']); ?> р</td>
+                    <td class="history__time"><?= dateToHumanFormat($item['dt_add']); ?></td>
+                    <?php endforeach; ?>
+                </tr>
+            </table>
+        </div>
     </div>
   </div>
 </section>
