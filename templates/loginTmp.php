@@ -1,9 +1,6 @@
-<?= $nav_menu; ?>
 <form class="form container" action="../login.php" method="post" <?= isset($errors) ? "form--invalid" : ""; ?>>
-    <!-- form--invalid -->
     <h2>Вход</h2>
     <div class="form__item <?= isset($errors['email']) ? "form__item--invalid" : ""; ?>">
-        <!-- form__item--invalid -->
         <label for="email">E-mail <sup>*</sup></label>
         <input id="email" type="text" name="email" placeholder="Введите e-mail"
                value="<?= $_POST['email'] ?? '' ?>">

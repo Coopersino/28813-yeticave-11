@@ -6,7 +6,6 @@
 
     $search = $_GET['search'] ?? '';
     $user_name = $_SESSION['user']['user_name'] ?? '';
-
     $PAGE_ITEMS = 9;
     $CURRENT_PAGE = 1;
     $offset = ($CURRENT_PAGE - 1) * $PAGE_ITEMS;

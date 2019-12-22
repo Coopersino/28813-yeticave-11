@@ -17,7 +17,7 @@
             $minutes = 0;
         }
 
-        return (['hours' => $hours, 'minutes' => $minutes]);
+        return (['hours' => $hours, 'minutes' => $minutes, 'seconds'=> $seconds]);
     }
 
     function numberIsValid($value) {
@@ -51,4 +51,46 @@
         return !filter_var($value, FILTER_VALIDATE_EMAIL) ? 'Введите корректный email' : null;
     }
 
+    function getFirstElementOnDb($link, $sqlQuery, $data = []) {
+        $stmt = db_get_prepare_stmt($link, $sqlQuery, $data);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        return ($result) ? mysqli_fetch_assoc($result) : die('Ошибка соединения с БД');
+    }
+
+    function getAllDataOnDb($link, $sqlQuery, $data = []) {
+        $stmt = db_get_prepare_stmt($link, $sqlQuery, $data);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        return ($result) ? mysqli_fetch_all($result, MYSQLI_ASSOC) : die('Ошибка соединения с БД');
+    }
+
+    function insertDataInDb($link, $sqlQuery, $data = []) {
+        $stmt = db_get_prepare_stmt($link, $sqlQuery, $data);
+        $result = mysqli_stmt_execute($stmt);
+        return ($result) ? mysqli_insert_id($link) : die('Ошибка соединения с БД');
+    }
+
+    function dateToHumanFormat($value) {
+        setlocale(LC_ALL, 'ru_RU', 'ru_RU.UTF-8', 'ru', 'russian');
+        $hourSecond = 3600;
+        $timestampDiff = time() - strtotime($value);
+        $minutes = ltrim(strftime('%M ', $timestampDiff), '0');
+
+        if (($timestampDiff > 60) && ($timestampDiff < $hourSecond)) {
+            return $minutes . get_noun_plural_form(strftime('%M', $timestampDiff), 'минута', 'минуты', 'минут') . ' назад';
+        } else {
+
+            if ($timestampDiff < 60) {
+                return 'только что';
+            } else {
+
+                if ($timestampDiff === $hourSecond) {
+                    return 'Час назад';
+                }
+            }
+        }
+
+        return strftime('%d.%m.%y в %H:%M', strtotime($value));
+    }
 ?>
