@@ -1,4 +1,4 @@
-<?= $nav_menu; ?>
+<?= $navMenu; ?>
 <main>
     <section class="lot-item container">
         <h2><?= htmlspecialchars($advertisement['adv_name']) ?></h2>
@@ -17,7 +17,7 @@
 
                     <div class="lot-item__state">
                         <?php $expTime = getDateRange($advertisement['expiration_date']) ?>
-                        <div class="lot-item__timer timer <?= ($expTime['hours'] == 0) ? 'timer--finishing' : '' ?>">
+                        <div class="lot-item__timer timer <?= ($expTime['hours'] === 0) ? 'timer--finishing' : '' ?>">
                             <?= $expTime['hours'] . ':' . $expTime['minutes'] ?>
                         </div>
                         <div class="lot-item__cost-state">

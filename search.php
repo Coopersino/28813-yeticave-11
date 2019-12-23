@@ -5,16 +5,17 @@ require_once('functions.php');
 require_once('dataBaseQueries.php');
 
 $search = $_GET['search'] ?? '';
-$user_name = $_SESSION['user']['user_name'] ?? '';
+$userName = $_SESSION['user']['user_name'] ?? '';
 $filename = basename(__FILE__);
+$itemsCount = 0;
 $PAGE_ITEMS = 9;
 $CURRENT_PAGE = $_GET['page'] ?? 1;
 $offset = ($CURRENT_PAGE - 1) * $PAGE_ITEMS;
 
 if (!empty($search)) {
     $search = trim($search);
-
-    $countSql = mysqli_query($connect, 'SELECT COUNT(*) as cnt FROM advertisements WHERE MATCH(adv_name, description) AGAINST("' . $search . '") AND expiration_date > NOW()');
+    $safeSearch = mysqli_real_escape_string($connect, $search);
+    $countSql = mysqli_query($connect, 'SELECT COUNT(*) as cnt FROM advertisements WHERE MATCH(adv_name, description) AGAINST("' . $safeSearch . '") AND expiration_date > NOW()');
 
     $itemsCount = mysqli_fetch_assoc($countSql)['cnt'];
 
@@ -28,31 +29,31 @@ if (!empty($search)) {
 } else {
     $result = '';
 }
-$pages_count = ceil($items_count / $PAGE_ITEMS);
-$pages = range(1, $pages_count);
+$pagesCount = ceil($itemsCount / $PAGE_ITEMS);
+$pages = range(1, $pagesCount);
 
 $menu = include_template('navMenu.php', ['categories' => $categories]);
 
 $pagination = include_template('pagination.php', [
     'pages' => $pages,
-    'pages_count' => $pages_count,
-    'current_page' => $CURRENT_PAGE,
+    'pagesCount' => $pagesCount,
+    'currentPage' => $CURRENT_PAGE,
     'filename' => $filename,
     'search' => $search
 ]);
 
-$main_content = include_template('searchTmp.php', [
+$mainContent = include_template('searchTmp.php', [
     'search' => $search,
     'advertisements' => $result,
-    'nav_menu' => $menu,
+    'navMenu' => $menu,
     'pagination' => $pagination
 ]);
 
 $layoutContent = include_template('layout.php', [
-    'main_content' => $main_content,
+    'mainContent' => $mainContent,
     'title' => 'Результаты поиска',
     'categories' => $categories,
-    'user_name' => $user_name
+    'userName' => $userName
 ]);
 
 print ($layoutContent);

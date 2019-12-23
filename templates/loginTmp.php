@@ -1,4 +1,4 @@
-<?= $nav_menu; ?>
+<?= $navMenu; ?>
 <form class="form container" action="../login.php" method="post" <?= isset($errors) ? "form--invalid" : ""; ?>>
     <h2>Вход</h2>
     <div class="form__item <?= isset($errors['email']) ? "form__item--invalid" : ""; ?>">

@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[$key] = "Заполните это поле";
         }
     }
-
-    $sql = "SELECT id FROM users WHERE email = '" . $newUser['email'] . "'";
+    $safeEmail = mysqli_real_escape_string($connect, $newUser['email']);
+    $sql = "SELECT id FROM users WHERE email = '" . $safeEmail . "'";
     $result = mysqli_query($connect, $sql);
 
     if (mysqli_num_rows($result) > 0) {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newUser['password'] = password_hash($newUser['password'], PASSWORD_DEFAULT);
         $sql = 'INSERT INTO users (email, user_password, user_name, contacts)
                     VALUES (?, ?, ?, ?)';
-        dbInsertData($connect, $sql, $newUser);
+        insertDataInDb($connect, $sql, $newUser);
         header("Location: login.php");
     }
 }
@@ -68,15 +68,14 @@ $menu = include_template('navMenu.php', ['categories' => $categories]);
 $addContent = include_template('signUpUser.php', [
     'errors' => $errors,
     'categories' => $categories,
-    'nav_menu' => $menu
+    'navMenu' => $menu
 ]);
 
 $layoutContent = include_template('layout.php', [
-    'main_content' => $addContent,
-    'page_title' => 'Регистрация',
+    'mainContent' => $addContent,
+    'pageTitle' => 'Регистрация',
     'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name
+    'user_name' => $userName
 ]);
 
 print ($layoutContent);

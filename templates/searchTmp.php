@@ -1,4 +1,4 @@
-<?= $nav_menu; ?>
+<?= $navMenu; ?>
 <main class="container">
     <section class="lots">
         <?php if (empty($advertisements)): ?>

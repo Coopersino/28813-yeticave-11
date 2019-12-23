@@ -17,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $form[$field] = trim($form[$field]);
     }
 
-    $sql = "SELECT * FROM users WHERE email = '" . $form['email'] . "'";
+    $safeEmail = mysqli_real_escape_string($connect, $form['email']);
+
+    $sql = "SELECT * FROM users WHERE email = '" . $safeEmail . "'";
     $result = mysqli_query($connect, $sql);
     $user = $result ? mysqli_fetch_array($result, MYSQLI_ASSOC) : null;
 
@@ -43,15 +45,15 @@ if (isset($_SESSION['user'])) {
 $menu = include_template('navMenu.php', ['categories' => $categories]);
 
 $addContent = include_template('loginTmp.php', [
-    'nav_menu' => $menu,
+    'navMenu' => $menu,
     'errors' => $errors
 ]);
 
 $layoutContent = include_template('layout.php', [
-    'main_content' => $addContent,
-    'page_title' => 'Вход',
+    'mainContent' => $addContent,
+    'pageTitle' => 'Вход',
     'categories' => $categories,
-    'user_name' => $user_name
+    'userName' => $userName
 ]);
 
 print ($layoutContent);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$user_name = $_SESSION['user']['user_name'] ?? '';
+$userName = $_SESSION['user']['user_name'] ?? '';
 
 $connect = mysqli_connect("localhost", "root", "", "yeticave_base");
 mysqli_set_charset($connect, "utf-8");

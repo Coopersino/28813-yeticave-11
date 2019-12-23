@@ -21,16 +21,16 @@ if (isset($_SESSION['user'])) {
     if ($result) {
         $menu = include_template('navMenu.php', ['categories' => $categories]);
 
-        $rates_content = include_template('myBetsTmp.php', [
-            'rates_result' => $result,
-            'nav_menu' => $menu
+        $ratesContent = include_template('myBetsTmp.php', [
+            'ratesResult' => $result,
+            'navMenu' => $menu
         ]);
 
         $layout_content = include_template('layout.php', [
-            'main_content' => $rates_content,
+            'mainContent' => $ratesContent,
             'title' => 'Мои ставки',
             'categories' => $categories,
-            'user_name' => $user_name
+            'userName' => $userName
         ]);
         print ($layout_content);
     }

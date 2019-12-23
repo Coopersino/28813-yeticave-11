@@ -37,9 +37,7 @@
      email      VARCHAR(128) NOT NULL,
      user_name       VARCHAR(128) NOT NULL,
      user_password   CHAR(64) NOT NULL,
-     contacts   VARCHAR(128) NOT NULL,
-     advert_id  INT,
-     rate_id    INT
+     contacts   VARCHAR(128) NOT NULL
  );
 
 CREATE UNIQUE INDEX advert_name ON advertisements(adv_name);

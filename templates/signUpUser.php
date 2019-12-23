@@ -1,5 +1,5 @@
 <main>
-    <?= $nav_menu; ?>
+    <?= $navMenu; ?>
     <form class="form container <?= isset($errors) ? "form--invalid" : ""; ?>" action="../signUp.php" method="post"
           autocomplete="off">
         <h2>Регистрация нового аккаунта</h2>

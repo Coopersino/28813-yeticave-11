@@ -93,15 +93,15 @@ $menu = include_template('navMenu.php', ['categories' => $categories]);
 $addContent = include_template('addLot.php', [
     'errors' => $errors,
     'categories' => $categories,
-    'nav_menu' => $menu
+    'navMenu' => $menu
 ]);
 
 $layoutContent = include_template('layout.php', [
-    'main_content' => $addContent,
-    'page_title' => 'Добавление лота',
+    'mainContent' => $addContent,
+    'pageTitle' => 'Добавление лота',
     'categories' => $categories,
-    'is_auth' => $is_auth,
-    'user_name' => $user_name
+//    'isAuth' => $isAuth,
+    'userName' => $userName
 ]);
 
 print($layoutContent);

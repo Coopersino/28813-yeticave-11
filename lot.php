@@ -66,23 +66,28 @@ if (isset($advertId)) {
     if ($advertisement) {
         $menu = include_template('navMenu.php', ['categories' => $categories]);
 
-        $mainContent = include_template('lotTmp.php', [
+        $parameters = [
             'advertisement' => $advertisement,
-            'nav_menu' => $menu,
+            'navMenu' => $menu,
             'categories' => $categories,
             'minRate' => $minRate,
             'maxRate' => $maxRate[0],
             'rateData' => $rateData,
-            'errors' => $errors,
             'countRates' => $countRates,
             'lastRate' => $lastRate
-        ]);
+        ];
+
+        if (isset($errors)) {
+            $parameters['errors'] = $errors;
+        }
+
+        $mainContent = include_template('lotTmp.php', $parameters);
 
         $layoutContent = include_template('layout.php', [
             'categories' => $categories,
-            'main_content' => $mainContent,
-            'page_title' => 'Главная',
-            'user_name' => $user_name
+            'mainContent' => $mainContent,
+            'pageTitle' => 'Главная',
+            'userName' => $userName
         ]);
 
         print($layoutContent);
