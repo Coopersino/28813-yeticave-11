@@ -1,13 +1,5 @@
 <main>
-    <nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach ($categories as $category): ?>
-                <li class="nav__item">
-                    <a href="pages/all-lots.html"><?= htmlspecialchars($category['categor_name']); ?></a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
+    <?= $nav_menu; ?>
     <form class="form container <?= isset($errors) ? "form--invalid" : ""; ?>" action="../signUp.php" method="post"
           autocomplete="off">
         <h2>Регистрация нового аккаунта</h2>

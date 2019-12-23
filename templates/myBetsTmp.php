@@ -1,4 +1,5 @@
 <?= $nav_menu; ?>
+<main class="container">
 <section class="rates container">
     <h2>Мои ставки</h2>
     <table class="rates__list">
@@ -18,19 +19,19 @@
                 <?php if (isset($item['winner'])): ?>
                     <div>
                         <h3 class="rates__title"><a
-                                href="lot.php?id=<?= htmlspecialchars($item['lotid']); ?>"><?= htmlspecialchars($item['lot_title']); ?></a></h3>
+                                    href="lot.php?id=<?= htmlspecialchars($item['lotid']); ?>"><?= htmlspecialchars($item['lot_title']); ?></a>
+                        </h3>
                         <p><?= htmlspecialchars($item['user_contacts']); ?></p>
                     </div>
                 <?php else : ?>
                     <h3 class="rates__title"><a
-                            href="lot.php?id=<?= htmlspecialchars($item['lotid']); ?>"><?= htmlspecialchars($item['lot_title']); ?></a></h3>
+                                href="lot.php?id=<?= htmlspecialchars($item['lotid']); ?>"><?= htmlspecialchars($item['lot_title']); ?></a>
+                    </h3>
                 <?php endif ?>
-
             </td>
             <td class="rates__category">
                 <?= htmlspecialchars($item['category_title']); ?>
             </td>
-
             <td class="rates__timer">
                 <?php $expTime = getDateRange($item['lot_end_date']) ?>
                 <?php if ((strtotime($item['lot_end_date']) - 86400) < strtotime(date("Y-m-d"))): ?>
@@ -43,7 +44,8 @@
                     </div>
                 <?php else: ?>
                     <div class="timer">
-                        <?= $timer[0] . ':' . $timer[1] . ':' . $timer[2]; ?>
+                        <?= ($expTime['hours'] == 0) ? 'timer--finishing' : '' ?>
+                        <?= $expTime['hours'] . ':' . $expTime['minutes'] . ':' . $expTime['seconds'] ?>
                     </div>
                 <?php endif ?>
             </td>
@@ -51,9 +53,10 @@
                 <?= getFinancialFormat(htmlspecialchars($item['rate_price'])); ?>
             </td>
             <td class="rates__time">
-                <?= dateToHumanFormat(htmlspecialchars($item['creation_rate'])); ?>
+                <?= dateToStringFormat(htmlspecialchars($item['creation_rate'])); ?>
             </td>
             </tr>
         <?php endforeach; ?>
     </table>
 </section>
+</main>

@@ -19,7 +19,7 @@
      expiration_date  TIMESTAMP NOT NULL,
      rate_step        DECIMAL,
      autor_id         INT NOT NULL,
-     winner_id        INT DEFAULT 0,
+     winner_id        INT (10),
      category_id      VARCHAR(128) NOT NULL
  );
 

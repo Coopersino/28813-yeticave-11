@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($page_title)?></title>
+    <title><?= htmlspecialchars($page_title) ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/flatpickr.min.css" rel="stylesheet">
@@ -42,18 +42,15 @@
             </nav>
         </div>
     </header>
-
-    <main class="container">
-        <?= $main_content ?>
-    </main>
+    <?= $main_content ?>
 </div>
 
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-            <?php foreach ($categories as $category):?>
+            <?php foreach ($categories as $value): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?= htmlspecialchars($category['categor_name']) ?></a>
+                    <a href="index.php?id=<?= htmlspecialchars($value['id']); ?>"><?= htmlspecialchars($value['categor_name']); ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

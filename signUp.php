@@ -1,76 +1,83 @@
 <?php
-    require_once('init.php');
-    require_once('helpers.php');
-    require_once('functions.php');
-    require_once('dataBaseQueries.php');
+require_once('init.php');
+require_once('helpers.php');
+require_once('functions.php');
+require_once('dataBaseQueries.php');
 
-    if (isset($_SESSION['user'])) {
-        http_response_code(403);
-        exit();
+if (isset($_SESSION['user'])) {
+    http_response_code(403);
+    exit();
+}
+
+$errors = [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $required = ['email', 'password', 'name', 'message'];
+    $rules = [
+        'email' => function ($value) {
+            return emailIsValid($value);
+        },
+        'password' => function ($value) {
+            return lengthIsValid($value, 5, 10);
+        },
+        'name' => function ($value) {
+            return lengthIsValid($value, 3, 15);
+        },
+        'message' => function ($value) {
+            return lengthIsValid($value, 10, 300);
+        }
+    ];
+
+    $newUser = filter_input_array(INPUT_POST, [
+        'email' => FILTER_DEFAULT,
+        'password' => FILTER_DEFAULT,
+        'name' => FILTER_DEFAULT,
+        'message' => FILTER_DEFAULT
+    ], true);
+
+    foreach ($newUser as $key => $value) {
+        if (isset($rules[$key])) {
+            $rule = $rules[$key];
+            $errors[$key] = $rule($value);
+        }
+        if (in_array($key, $required) && empty($value)) {
+            $errors[$key] = "Заполните это поле";
+        }
     }
 
-    $errors = [];
+    $sql = "SELECT id FROM users WHERE email = '" . $newUser['email'] . "'";
+    $result = mysqli_query($connect, $sql);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $required = ['email', 'password', 'name', 'message'];
-        $rules = [
-            'email' => function ($value) {
-                return emailIsValid($value);
-            },
-            'password' => function ($value) {
-                return lengthIsValid($value, 5, 10);
-            },
-            'name' => function ($value) {
-                return lengthIsValid($value, 3, 15);
-            },
-            'message' => function ($value) {
-                return lengthIsValid($value, 10, 300);
-            }
-        ];
+    if (mysqli_num_rows($result) > 0) {
+        $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
+    }
 
-        $newUser = filter_input_array(INPUT_POST, [
-            'email' => FILTER_DEFAULT,
-            'password' => FILTER_DEFAULT,
-            'name' => FILTER_DEFAULT,
-            'message' => FILTER_DEFAULT
-        ], true);
+    $errors = array_filter($errors);
 
-        foreach ($newUser as $key => $value) {
-            if (isset($rules[$key])) {
-                $rule = $rules[$key];
-                $errors[$key] = $rule($value);
-            }
-            if (in_array($key, $required) && empty($value)) {
-                $errors[$key] = "Заполните это поле";
-            }
-        }
-
-        $sql = "SELECT id FROM users WHERE email = '" . $newUser['email'] . "'";
-        $result = mysqli_query($connect, $sql);
-
-        if (mysqli_num_rows($result) > 0) {
-            $errors['email'] = 'Пользователь с этим email уже зарегистрирован';
-        }
-
-        $errors = array_filter($errors);
-
-        if (!count($errors)) {
-            $newUser['password'] = password_hash($newUser['password'], PASSWORD_DEFAULT);
-            $sql = 'INSERT INTO users (email, user_password, user_name, contacts)
+    if (!count($errors)) {
+        $newUser['password'] = password_hash($newUser['password'], PASSWORD_DEFAULT);
+        $sql = 'INSERT INTO users (email, user_password, user_name, contacts)
                     VALUES (?, ?, ?, ?)';
-            dbInsertData($connect, $sql, $newUser);
-            header("Location: login.php");
-        }
+        dbInsertData($connect, $sql, $newUser);
+        header("Location: login.php");
     }
-    $addContent = include_template('signUpUser.php', ['errors' => $errors, 'categories' => $categories]);
+}
 
-    $layoutContent = include_template('layout.php', [
-        'main_content' => $addContent,
-        'page_title' => 'Регистрация',
-        'categories' => $categories,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name
-    ]);
+$menu = include_template('navMenu.php', ['categories' => $categories]);
 
-    print ($layoutContent);
+$addContent = include_template('signUpUser.php', [
+    'errors' => $errors,
+    'categories' => $categories,
+    'nav_menu' => $menu
+]);
+
+$layoutContent = include_template('layout.php', [
+    'main_content' => $addContent,
+    'page_title' => 'Регистрация',
+    'categories' => $categories,
+    'is_auth' => $is_auth,
+    'user_name' => $user_name
+]);
+
+print ($layoutContent);
 ?>
